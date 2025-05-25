@@ -9,8 +9,3 @@ def detect_language(text):
     except Exception as e:
         return f"Error detecting language: {e}"
 
-
-if __name__ == "__main__":
-    if len(sys.argv) > 1:
-        text = " ".join(sys.argv[1:])
-        print(detect_language(text))

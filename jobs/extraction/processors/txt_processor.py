@@ -13,4 +13,4 @@ def process_txt(txt_file):
     formatted_paragraphs = [f"<p>{p}</p>" for p in paragraphs if p.strip()]
     txt_content = ''.join(formatted_paragraphs)
 
-    return json.dumps({"content": txt_content})
+    return {"content": txt_content}

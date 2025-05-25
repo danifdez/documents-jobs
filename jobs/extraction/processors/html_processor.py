@@ -89,4 +89,4 @@ def process_html(html_content):
     if extracted:
         extracted = extracted.strip()
 
-    return json.dumps({"content": extracted, "title": title, "metadata": metadata})
+    return {"content": extracted, "title": title, "metadata": metadata}

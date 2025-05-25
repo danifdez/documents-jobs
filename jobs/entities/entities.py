@@ -1,6 +1,4 @@
 from transformers import pipeline
-import sys
-import json
 
 
 def entities(text):
@@ -31,10 +29,4 @@ def entities(text):
         if key not in seen:
             seen.add(key)
             unique_result.append(ent)
-    return json.dumps(unique_result)
-
-
-if __name__ == "__main__":
-    if len(sys.argv) > 1:
-        sys.argv[1:] = [arg.strip('"') for arg in sys.argv[1:]]
-        print(entities(sys.argv[1:]))
+    return unique_result

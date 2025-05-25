@@ -60,4 +60,4 @@ def process_pdf(file):
         processed_content = str(
             parsed_html.body.decode_contents() if parsed_html.body else "")
 
-    return json.dumps({"content": processed_content, "title": result.document.name, "metadata": []})
+    return {"content": processed_content, "title": result.document.name, "metadata": []}

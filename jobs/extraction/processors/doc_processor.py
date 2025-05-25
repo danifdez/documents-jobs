@@ -45,4 +45,4 @@ def process_doc(file):
 
     body_content = body_content.strip()
 
-    return json.dumps({"content": body_content})
+    return {"content": body_content}

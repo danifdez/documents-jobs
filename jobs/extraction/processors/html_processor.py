@@ -1,8 +1,19 @@
-import json
 import re
 from trafilatura import extract
 from bs4 import BeautifulSoup
 
+_author_meta_names = ["author", ":author", "byl", "dc.creator"]
+_date_meta_names = [":published_time", ":publishtime", "date", "publication_date","dc.date.issued", "pubdate", "timestamp"]
+
+def _get_meta_content(soup, names):
+    meta_tags = soup.find_all("meta", attrs={"content": True})
+
+    for tag in meta_tags:
+        for attr in ("name", "property"):
+            value = tag.get(attr, "").lower()
+            if any(value.endswith(suffix.lower()) for suffix in names):
+                return tag["content"]
+    return None
 
 def process_html(html_content):
     extracted = extract(
@@ -10,12 +21,8 @@ def process_html(html_content):
 
     soup = BeautifulSoup(html_content, "html.parser")
     title = soup.title.string if soup.title else "No Title"
-    metadata = {}
-    for meta_tag in soup.find_all("meta"):
-        name = meta_tag.get("name") or meta_tag.get("property")
-        content = meta_tag.get("content")
-        if name and content:
-            metadata[name] = content
+    author = _get_meta_content(soup, _author_meta_names)
+    publication_date = _get_meta_content(soup, _date_meta_names)
 
     if extracted:
         try:
@@ -89,4 +96,4 @@ def process_html(html_content):
     if extracted:
         extracted = extracted.strip()
 
-    return {"content": extracted, "title": title, "metadata": metadata}
+    return {"content": extracted, "title": title, "author": author, "publication_date": publication_date}

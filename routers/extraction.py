@@ -20,4 +20,10 @@ class ExtractionResponse(BaseModel):
 @router.post("/", response_model=ExtractionResponse)
 async def extract_text(request: ExtractionRequest) -> ExtractionResponse:
     extracted_text = extract(request.file)
-    return ExtractionResponse(content=extracted_text['content'], title=extracted_text.get('title'), author=extracted_text.get('author'), publication_date=extracted_text.get('publication_date'))
+    
+    return ExtractionResponse(
+        content=extracted_text.get('content', ''), 
+        title=extracted_text.get('title'), 
+        author=extracted_text.get('author'), 
+        publication_date=extracted_text.get('publication_date')
+    )

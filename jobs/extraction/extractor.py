@@ -5,7 +5,7 @@ from jobs.extraction.processors.pdf_processor import process_pdf
 from jobs.extraction.processors.txt_processor import process_txt
 
 
-def extract(file_path: str) -> str:
+def extract(file_path: str) -> dict:
     try:
         _, ext = os.path.splitext(file_path)
         ext = ext.lower()

@@ -1,4 +1,3 @@
-import json
 from docling.document_converter import DocumentConverter, InputFormat, PdfFormatOption, StandardPdfPipeline
 from bs4 import BeautifulSoup
 

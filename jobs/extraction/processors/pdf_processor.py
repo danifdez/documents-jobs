@@ -1,4 +1,3 @@
-import json
 import re
 from docling.document_converter import DocumentConverter, InputFormat, PdfFormatOption, StandardPdfPipeline
 from bs4 import BeautifulSoup
@@ -60,4 +59,4 @@ def process_pdf(file):
         processed_content = str(
             parsed_html.body.decode_contents() if parsed_html.body else "")
 
-    return {"content": processed_content, "title": result.document.name}
+    return {"content": processed_content}

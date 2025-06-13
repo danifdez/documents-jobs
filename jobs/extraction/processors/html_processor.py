@@ -82,6 +82,9 @@ def process_html(html_content):
             for tag in clean_soup.find_all(['head', 'script', 'style']):
                 tag.decompose()
 
+            for graphic in clean_soup.find_all('graphic'):
+                graphic.name = 'img'
+
             clean_html = str(clean_soup).strip()
 
             clean_html = re.sub(r'\s+', ' ', clean_html)

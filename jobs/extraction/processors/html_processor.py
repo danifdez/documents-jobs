@@ -15,6 +15,31 @@ def _get_meta_content(soup, names):
                 return tag["content"]
     return None
 
+def convert_custom_table_to_html(soup):
+    for table in soup.find_all('table'):
+        new_table = soup.new_tag('table')
+        rows = table.find_all('row')
+        for row in rows:
+            tr = soup.new_tag('tr')
+            cells = row.find_all('cell')
+            for cell in cells:
+                if cell.get('role') == 'head':
+                    th = soup.new_tag('th')
+                    th.string = cell.get_text(strip=True)
+                    tr.append(th)
+                else:
+                    td = soup.new_tag('td')
+                    td.string = cell.get_text(strip=True)
+                    tr.append(td)
+            # If no cells, add empty td
+            if not cells:
+                td = soup.new_tag('td')
+                td.string = ''
+                tr.append(td)
+            new_table.append(tr)
+        table.replace_with(new_table)
+    return soup
+
 def process_html(html_content):
     extracted = extract(
         html_content, output_format="html", favor_precision=True, include_formatting=True, include_links=True, include_images=True, include_tables=True)
@@ -86,6 +111,10 @@ def process_html(html_content):
                 graphic.name = 'img'
 
             clean_html = str(clean_soup).strip()
+
+            # Convert custom tables to standard HTML tables
+            clean_soup = convert_custom_table_to_html(clean_soup)
+            clean_html = str(clean_soup)
 
             clean_html = re.sub(r'\s+', ' ', clean_html)
             clean_html = re.sub(r'<p>\s*</p>', '', clean_html)

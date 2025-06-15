@@ -13,7 +13,7 @@ def process_doc(file):
 
     result = converter.convert(file)
 
-    html_content = result.document.export_to_html()
+    html_content = result.document.export_to_html(image_mode='embedded')
     parsed_html = BeautifulSoup(html_content, "html.parser")
 
     for tag in parsed_html.find_all(True):

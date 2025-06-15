@@ -6,6 +6,8 @@ from bs4 import BeautifulSoup
 def process_pdf(file):
     pipeline_options = StandardPdfPipeline.get_default_options()
     pipeline_options.do_ocr = False
+    pipeline_options.generate_picture_images = True
+    pipeline_options.images_scale = 2.0
 
     pdf_format_option = PdfFormatOption(pipeline_options=pipeline_options)
 
@@ -14,7 +16,7 @@ def process_pdf(file):
 
     result = converter.convert(file)
 
-    html_content = result.document.export_to_html()
+    html_content = result.document.export_to_html(image_mode='embedded')
     parsed_html = BeautifulSoup(html_content, "html.parser")
 
     try:

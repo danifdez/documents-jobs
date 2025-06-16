@@ -31,7 +31,7 @@ def process_pdf(file):
                     del tag['id']
 
             for div in body.find_all('div'):
-                if not div.find(['div', 'p', 'ul', 'ol', 'table', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6']):
+                if not div.find(['div', 'p', 'ul', 'ol', 'table', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a']):
                     div.name = 'p'
 
             body_elements = [el for el in body.children if el.name is not None]
